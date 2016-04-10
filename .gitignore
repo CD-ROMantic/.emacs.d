@@ -52,3 +52,10 @@ flycheck_*.el
 # Packaging
 .cask
 
+/conf.el
+elisp/*
+emojis/*
+/ido.last
+/projectile-bookmarks.eld
+session.[0-9]*
+/smex-items
