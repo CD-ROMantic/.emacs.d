@@ -1,0 +1,526 @@
+#+TITLE: conf.org --- My personal GNU Emacs configuration
+#+AUTHOR: Geoff T. Wark
+
+# TODO: add Rails, C#, and JavaScript packages
+
+I converted to the [[https://stallman.org/saint.html][Church of Emacs]] during the summer of 2015. While Emacs is the [[https://www.youtube.com/watch?v=VADudzQGvU8][editor of a lifetime]], do *NOT* bother unless you have the time (6+ months) and interest to invest. Rest assured, however, that it /is/ worth it. What follows is the setup I have picked up along the way.
+
+This config relies heavily on [[https://github.com/jwiegley/use-package][use-package]] by [[https://twitter.com/jwiegley][John Wiegley]] (the current Emacs +God Emperor+ maintainer). Further inspiration comes from [[https://github.com/danielmai/.emacs.d][Daniel Mai]], [[http://sachachua.com/][Sacha Chua]], and [[http://emacs-fu.blogspot.com/][Dirk-Jan C. Binnema]]. Smaller references are provided inline when relevant.
+
+* Installing Emacs
+
+Instructions on how to properly acquire GNU Emacs on the 3 most popular operating systems.
+
+_NOTE:_ You should consider running [[https://www.emacswiki.org/emacs/EmacsAsDaemon][Emacs as a daemon]] for both speed and integrity reasons. Use =emacsclient -c -n &= to connect.
+
+** Debian-based Linux
+
+Use the default package manager[fn:1].
+
+#+BEGIN_SRC sh :tangle no
+  sudo apt-get update && sudo apt-get install -y emacs
+#+END_SRC
+
+[fn:1] You probably already know exactly what to do if you're using some different flavor of Linux. :P
+
+** Mac O$ X
+
+Use [[http://brew.sh/][Homebrew]]. The command below will install the native GUI version with support for both image processing and secure communications.
+
+#+BEGIN_SRC sh :tangle no
+  brew install emacs --with-cocoa --with-imagemagick --with-gnutls
+#+END_SRC
+
+** Macro$hill Wangblow$
+
+Download and unzip the most recent version from this [[https://ftp.gnu.org/gnu/emacs/windows/][link]]. Open =runemacs.exe= found in the =bin= folder to start. That's it! :D
+
+_NOTE:_ Some aspects of this config may not work well under Windows.
+
+* Personal Information
+
+Let Emacs know who I am.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name     "Geoff T. Wark"
+        user-email-address "ffoeg@protonmail.ch")
+#+END_SRC
+
+* UI/UX Customizations
+** Theme
+
+I'll order the [[http://kippura.org/zenburnpage/][alien fruit salad]], please.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
+
+  ;; Italicize comments
+  (make-face-italic 'font-lock-comment-face)
+
+  ;; Make whitespace/region colors more obvious
+  (setq-default show-trailing-whitespace 1)
+  (set-face-attribute 'trailing-whitespace nil :background "orange")
+  (set-face-attribute 'region              nil :background "white smoke"
+                                               :foreground "black")
+#+END_SRC
+
+** Font
+
+My screen is quite small. You may wish to change the font and its size.
+
+#+BEGIN_SRC emacs-lisp
+  ;; TODO: make this platform independent
+  (set-default-font "Liberation Mono-10.5")
+#+END_SRC
+
+** Cursor
+
+The cursor is difficult for me to find at times. Let's make it bright red and stop that damn blinking!
+
+#+BEGIN_SRC emacs-lisp
+  (setq default-frame-alist '((cursor-color . "red")))
+  (blink-cursor-mode -1)
+#+END_SRC
+
+** Other
+
+#+BEGIN_SRC emacs-lisp
+  ;; Free up screen real estate
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+
+  ;; Flash the screen instead of making an audible ding
+  (setq visible-bell t)
+
+  ;; Focus the current line
+  (global-hl-line-mode 1)
+
+  ;; Mark the fringe when the buffer ends
+  (toggle-indicate-empty-lines)
+
+  ;; Make window handling (i.e. how the frames are partitioned) more convienent.
+  ;; Use `C-c left` for undo and `C-c right` for redo
+  (winner-mode 1)
+#+END_SRC
+
+* General Settings
+** Sane Defaults
+
+Most of these come from [[https://github.com/magnars/.emacs.d/blob/master/settings/sane-defaults.el][Magnar Sveen]].
+
+#+BEGIN_SRC emacs-lisp
+  ;; Use UTF-8 always
+  (setq locale-coding-system   'utf-8)
+  (set-terminal-coding-system  'utf-8)
+  (set-keyboard-coding-system  'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system        'utf-8)
+
+  ;; Move files to the trash when deleting
+  (setq delete-by-moving-to-trash t)
+
+  ;; Turn off line wrapping
+  (setq-default truncate-lines 1)
+
+  ;; Delete region if/when typed in
+  (delete-selection-mode 1)
+
+  ;; Show column number in the mode line
+  (column-number-mode 1)
+
+  ;; Lines should be 80 characters wide
+  (setq-default fill-column 80)
+
+  ;; Sentences do NOT need double spaces to end. Period.
+  (set-default 'sentence-end-double-space nil)
+#+END_SRC
+
+** Indentation
+
+I hate tabs! >:(
+
+#+BEGIN_SRC emacs-lisp
+  ;; Generic settings
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
+
+  ;; C/C-like languages
+  (setq-default c-basic-offset 4)
+  (c-set-offset 'case-label '+)
+#+END_SRC
+
+** Custom Functions
+
+Small yet useful functions that I often use.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/change-font-height (x)
+    "Change the font height based on user input.
+
+  This input is multiplied by 10 to match Emacs convention."
+    (interactive "xEnter desired font height: ")
+    (set-face-attribute 'default nil :height (truncate (* x 10)))
+    (message "The font height is now %s" x))
+
+  (defun my/untabify-buffer ()
+    "Run `untabify' on the entire buffer."
+    (interactive)
+    (untabify (point-min) (point-max))
+    (message "All tabs are now spaces."))
+#+END_SRC
+
+* Packages
+
+/What's So Great About Emacs? or EXTENSIBILITY!/ [[https://www.youtube.com/watch?v=65t-OzhlmvE][:^)]]
+
+** Built-in+
+*** Eshell
+
+== best shell!!1
+
+#+BEGIN_SRC emacs-lisp
+  ;; Turn off some undesirable global modes
+  (add-hook 'eshell-mode-hook (lambda ()
+                                (company-mode -1)))
+#+END_SRC
+
+*** Ido & Smex
+
+Simplify file and command discovery/completion.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ido
+    :init
+    (progn
+      (use-package ido-complete-space-or-hyphen
+        :ensure t)
+      (setq ido-everywhere 1)
+      (ido-mode 1)
+      (use-package ido-vertical-mode
+        :ensure t
+        :init
+        (progn
+          (ido-vertical-mode 1)
+          (setq ido-vertical-define-keys 'C-n-and-C-p-only)))
+      (use-package smex
+        :ensure t
+        :commands (smex smex-major-mode-commands)
+        :init
+        (progn
+          (smex-initialize)
+          (bind-key "M-x"         'smex)
+          (bind-key "M-X"         'smex-major-mode-commands)
+          (bind-key "C-c C-c M-x" 'execute-extended-command)))))
+#+END_SRC
+
+*** Org mode
+
+Organize your life in plain text!:tm: You should consider reading the [[http://orgmode.org/guide/][compact guide]].
+
+#+BEGIN_SRC emacs-lisp
+  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (setq org-log-done t)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "RECURRING(r)"
+                    "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(g)")))
+  ;; TODO: add list of agenda file locations here
+
+  (use-package org-bullets
+    :ensure t
+    :init
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+  ;; Turn on word wrapping for .org files
+  (add-hook 'org-mode-hook (lambda () (visual-line-mode)))
+
+  ;; Hide emphasis markers (e.g. *asterisk* for bold)
+  (setq org-hide-emphasis-markers t)
+
+  ;; Change the icon Org mode uses to indicate hidden content
+  (setq org-ellipsis "\u2935")            ; the symbol used is a cornered arrow
+
+#+END_SRC
+
+** From [[http://melpa.org][MELPA]]
+*** column-marker
+
+Put a subtle hint at column 81 when the code is getting too long.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package column-marker
+    :ensure t
+    :config
+    (set-face-attribute 'column-marker-1 nil :background "black")
+    (add-hook 'find-file-hook (lambda () (interactive (column-marker-1 81)))))
+#+END_SRC
+
+*** company
+
+COMPlete ANYthing.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :diminish company-mode
+    :init
+    (progn
+      (add-hook 'after-init-hook 'global-company-mode)
+
+      ;; Turn off in Eshell
+      (add-hook 'eshell-mode-hook (lambda () (company-mode)))))
+#+END_SRC
+
+*** elfeed
+
+An Emacs web feeds client.
+
+I only use it to manage/view my YouTube subscriptions.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed
+    :ensure t
+    :init
+    (global-set-key (kbd "C-x w") 'elfeed)
+    :config
+    (progn
+      (setq elfeed-feeds
+            '(;; charliewinsmore
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCweqeK26PLExyiHjHmujFjw"
+              ;; charliezzz
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCrH_7K2seB3TfrX9JA05tbA"
+              ;; emacsrocks
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCkRmQ_G_NbdbCQMpALg6UPg"
+              ;; Ethan and Hila
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC7pp40MU_6rLK5pvJYG3d0Q"
+              ;; Every Frame a Painting
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCjFqcJQXGZ6T6sxyFB-5i6A"
+              ;; Feminism LOL
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCVRQqUgDRBevsDGOeE1DL3A"
+              ;; GameXplain
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCfAPTv1LgeEWevG8X_6PUOQ"
+              ;; Gaming Historian
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCnbvPS_rXp4PC21PG2k1UVg"
+              ;; h3h3Productions
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCDWIvJwLJsE4LG1Atne2blQ"
+              ;; HappyConsoleGamer
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC2vUKoTGIwNYq4LO0YWKPIg"
+              ;; Howard Abrams
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCVHICXXtKG7rZgtC5xonNdQ"
+              ;; Maddox
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC_c1gdsojLxBGkgzS0NsvUw"
+              ;; NutritionFacts.org
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCddn8dUxYdgJz3Qr5mjADtA"
+              ;; Oni Black Mage
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCUEF9XL3o8dZ6hvVf8jAi8Q"
+              ;; Sacha Chua
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UClT2UAbC6j7TqOWurVhkuHQ"
+              ;; SethBling
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC8aG3LDTDwNR1UQhSn9uVrw"
+              ;; Shoe0nHead
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC0aanx5rpr7D1M7KCFYzrLQ"
+              ;; Stop Skeletons From Fighting
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC5Xeb9-FhZXgvw340n7PsCQ"
+              ;; Super Bunnyhop
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCWqr2tH3dPshNhPjV5h1xRw"
+              ;; TamashiiHiroka
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCid9DssdW6-yxUNl3_aba6A"
+              ;; TheJWittz
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCUIJFJJLhxIrZVdAVdwL3bQ"
+              ;; ThinkAboutThis
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC4to0ojhDnczNwQPS-36Rcg"
+              ;; TooDamnFilthy
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCT31um1Ic8KweVWEMBC1K7A"
+              ;; TVFilthyFrank
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCkitABalXafr-NqceQdDXtg"
+              ;; Vegan Gains
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCr2eKhGzPhN5RPVk5dd5o3g"
+              ;; Vegan Health Fitness
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCfSsH-d8DJcvax-7JSZHH4w"))
+
+      (setq-default elfeed-search-filter "@1-week-ago +unread ")))
+#+END_SRC
+
+*** emojify
+
+A goofy package that adds emoji support to Emacs. Mostly just use it for :beer:.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package emojify
+    :ensure t
+    :init
+    (progn
+      (use-package company-emoji
+        :ensure t
+        :config
+        (add-to-list 'company-backends 'company-emoji))
+      (add-hook 'after-init-hook #'global-emojify-mode)))
+#+END_SRC
+
+*** expand-region
+
+Expand the region by semantic units. Can be done multiple times in-a-row.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :commands er/expand-region
+    :init
+    (bind-key "C-=" 'er/expand-region))
+#+END_SRC
+
+*** flycheck
+
+Provides on-the-fly syntax checking for just about every damn language.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :diminish flycheck-mode
+    :init
+    (add-hook 'after-init-hook #'global-flycheck-mode))
+#+END_SRC
+
+*** git-gutter-fringe
+
+Display git diff in the fringe.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter-fringe
+    :ensure t
+    :init
+    (use-package fringe-helper
+      :ensure t)
+    :config
+    (progn
+      (set-face-foreground 'git-gutter-fr:added    "green")
+      (set-face-foreground 'git-gutter-fr:deleted  "blue")
+      (set-face-foreground 'git-gutter-fr:modified "yellow")
+      (global-git-gutter-mode 1)))
+#+END_SRC
+
+*** hl-indent
+
+Highlights indentation below the starting character of a line on subsequent lines. Works for any programming major mode including those with irregular indentation (e.g. Haskell).
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hl-indent
+    :ensure t
+    :init
+    (add-hook 'prog-mode-hook 'hl-indent-mode)
+    :config
+    (set-face-attribute 'hl-indent-face nil :background "gray27"))
+#+END_SRC
+
+*** magit
+
+A Git Porcelain inside Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :commands magit-status
+    :init
+    (bind-key "C-c g" 'magit-status)
+    :config
+    (progn
+      ;; full screen magit-status
+      ;; SOURCE= http://whattheemacsd.com/setup-magit.el-01.html
+      (defadvice magit-status (around magit-fullscreen activate)
+        (window-configuration-to-register :magit-fullscreen)
+        ad-do-it
+        (delete-other-windows))
+
+      (defun magit-quit-session ()
+        "Restores the previous window configuration and kills the magit buffer"
+        (interactive)
+        (kill-buffer)
+        (jump-to-register :magit-fullscreen))
+
+      (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)))
+#+END_SRC
+
+*** multiple-cursors
+
+Adds multi-cursor support.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors
+    :ensure t
+    :commands (mc/add-cursor-on-click mc/edit-lines)
+    :init
+    (progn
+      (bind-key "M-S-<mouse-1>" 'mc/add-cursor-on-click)
+      (bind-key "C-S-c C-S-c"   'mc/edit-lines)))
+#+END_SRC
+
+*** nyan-mode
+
+Displays an indicator of your current position in the buffer featuring everyone's favorite [[https://www.youtube.com/watch?v=wZZ7oFKsKzY][Nyan Cat]]!
+
+#+BEGIN_SRC emacs-lisp
+  (use-package nyan-mode
+    :ensure t
+    :init
+    (nyan-mode 1))
+#+END_SRC
+
+*** projectile
+
+A project navigation and management library built for Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :init
+    (projectile-global-mode))
+#+END_SRC
+
+*** simple-clip
+
+Make easy the access of the system clipboard.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package simpleclip
+    :ensure t
+    :init
+    (simpleclip-mode 1)
+    :config
+    (bind-key "C-S-v C-S-v" 'simpleclip-paste))
+#+END_SRC
+
+*** smartparens
+
+Minor mode that deals with parens pairs and tries to be smart about it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :diminish smartparens-mode
+    :init
+    (progn
+      (require 'smartparens-config)
+      (smartparens-global-mode 1)))
+#+END_SRC
+
+** Other
+
+See the [[file:README.org][README]] for info about how to install these packages.
+
+*** pianobar.el
+
+Run [[http://www.pandora.com/][Pandora Internet Radio]] as an inferior process inside Emacs via [[https://6xq.net/pianobar/][pianobar]].
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/elisp/pianobar.el/")
+  (autoload 'pianobar "pianobar" nil t)
+
+  ;; Turn off some undesirable global modes
+  (add-hook 'comint-mode-hook (lambda ()
+                                (company-mode -1)
+                                (smartparens-mode -1)))
+#+END_SRC
