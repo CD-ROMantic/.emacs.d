@@ -1,0 +1,16 @@
+#+TITLE: README.org --- My personal GNU Emacs configuration
+#+AUTHOR: Geoff T. Wark
+
+See [[file:conf.org][conf.org]] to find out where all the :rainbow:magic:rainbow: happens.
+
+* Instructions
+
+Be sure to backup your current config before cloning this repository into =~/emacs.d=! Then run the following *nix commands (or their equivalent for your OS) to install additional packages:
+
+#+BEGIN_SRC sh :tangle no
+  mkdir ~/.emacs.d/elisp
+  cd ~/.emacs.d/elisp/
+  git clone https://github.com/jhanson/pianobar.el.git
+#+END_SRC
+
+[[http://www.abolitionistapproach.com/][#GoVegan]]
