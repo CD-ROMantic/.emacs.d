@@ -185,7 +185,8 @@ Small yet useful functions that I often use.
 #+BEGIN_SRC emacs-lisp
   ;; Turn off some undesirable global modes
   (add-hook 'eshell-mode-hook (lambda ()
-                                (company-mode -1)))
+                                (company-mode -1)
+                                (toggle-truncate-lines)))
 #+END_SRC
 
 *** Ido & Smex
@@ -530,5 +531,6 @@ Run [[http://www.pandora.com/][Pandora Internet Radio]] as an inferior process i
   ;; Turn off some undesirable global modes
   (add-hook 'comint-mode-hook (lambda ()
                                 (company-mode -1)
-                                (smartparens-mode -1)))
+                                (smartparens-mode -1)
+                                (toggle-truncate-lines)))
 #+END_SRC
