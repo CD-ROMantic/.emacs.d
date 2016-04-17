@@ -296,6 +296,8 @@ I only use it to manage/view my YouTube subscriptions.
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCweqeK26PLExyiHjHmujFjw"
               ;; charliezzz
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCrH_7K2seB3TfrX9JA05tbA"
+              ;; Digibro
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCHhnf3RgHabfk5f2gUX6EVQ"
               ;; emacsrocks
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCkRmQ_G_NbdbCQMpALg6UPg"
               ;; Ethan and Hila
@@ -308,22 +310,34 @@ I only use it to manage/view my YouTube subscriptions.
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCfAPTv1LgeEWevG8X_6PUOQ"
               ;; Gaming Historian
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCnbvPS_rXp4PC21PG2k1UVg"
+              ;; Glass Reflection
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCmEbe0XH51CI09gm_9Fcn8Q"
               ;; h3h3Productions
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCDWIvJwLJsE4LG1Atne2blQ"
               ;; HappyConsoleGamer
               "https://www.youtube.com/feeds/videos.xml?channel_id=UC2vUKoTGIwNYq4LO0YWKPIg"
               ;; Howard Abrams
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCVHICXXtKG7rZgtC5xonNdQ"
+              ;; jhameelmusic
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCXY6WQPmwgP9sEBVu9P1KIQ"
+              ;; Jon Venus
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCE-LXXVl3u9yJO3WRGTrEoA"
               ;; Maddox
               "https://www.youtube.com/feeds/videos.xml?channel_id=UC_c1gdsojLxBGkgzS0NsvUw"
+              ;; Maddox Animation
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCKqBXgfVRwWSDwUH_0hA2RA"
               ;; Mic. the Vegan
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCGJq0eQZoFSwgcqgxIE9MHw"
               ;; Milo Yiannopoulos
               "https://www.youtube.com/feeds/videos.xml?channel_id=UC0aVoboXBUx2-tVIWHc3W2Q"
+              ;; Nigma's Vidya Channel
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCpAwtVHwXUnEmGgY9DVkk-w"
               ;; NutritionFacts.org
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCddn8dUxYdgJz3Qr5mjADtA"
               ;; Oni Black Mage
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCUEF9XL3o8dZ6hvVf8jAi8Q"
+              ;; Reality Calls (née Think Vegan)
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC9vwJXx7DR-3zSub4mwQNFg"
               ;; Sacha Chua
               "https://www.youtube.com/feeds/videos.xml?channel_id=UClT2UAbC6j7TqOWurVhkuHQ"
               ;; SethBling
@@ -336,12 +350,14 @@ I only use it to manage/view my YouTube subscriptions.
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCWqr2tH3dPshNhPjV5h1xRw"
               ;; TamashiiHiroka
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCid9DssdW6-yxUNl3_aba6A"
+              ;; The 8-Bit Guy
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC8uT9cgJorJPWu7ITLGo9Ww"
+              ;; The Obsolete Geek
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UChJpPIRfNNqlB0dwlQQVLVQ"
               ;; TheJWittz
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCUIJFJJLhxIrZVdAVdwL3bQ"
               ;; ThinkAboutThis
               "https://www.youtube.com/feeds/videos.xml?channel_id=UC4to0ojhDnczNwQPS-36Rcg"
-              ;; Think Vegan
-              "https://www.youtube.com/feeds/videos.xml?channel_id=UC9vwJXx7DR-3zSub4mwQNFg"
               ;; TooDamnFilthy
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCT31um1Ic8KweVWEMBC1K7A"
               ;; TVFilthyFrank
