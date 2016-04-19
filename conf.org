@@ -247,6 +247,15 @@ Organize your life in plain text!:tm: You should consider reading the [[http://o
 
 #+END_SRC
 
+*** python-mode
+
+#+BEGIN_SRC emacs-lisp
+  ;; Stop colon character from causing electric indent
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (setq electric-indent-chars (delq ?: electric-indent-chars))))
+#+END_SRC
+
 ** From [[http://melpa.org][MELPA]]
 *** column-marker
 
