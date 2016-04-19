@@ -305,6 +305,8 @@ I only use it to manage/view my YouTube subscriptions.
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCweqeK26PLExyiHjHmujFjw"
               ;; charliezzz
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCrH_7K2seB3TfrX9JA05tbA"
+              ;; DanielFromSL
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCNa9i8ifGJRlK2yWgM9DcOA"
               ;; Digibro
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCHhnf3RgHabfk5f2gUX6EVQ"
               ;; emacsrocks
