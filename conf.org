@@ -229,7 +229,7 @@ Organize your life in plain text!:tm: You should consider reading the [[http://o
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "RECURRING(r)"
                     "|" "DONE(d)" "CANCELLED(c)" "DELEGATED(g)")))
-  ;; TODO: add list of agenda file locations here
+  (setq org-agenda-files '("~/Dropbox/org"))
 
   (use-package org-bullets
     :ensure t
