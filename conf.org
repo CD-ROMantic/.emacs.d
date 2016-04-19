@@ -300,12 +300,16 @@ I only use it to manage/view my YouTube subscriptions.
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCHhnf3RgHabfk5f2gUX6EVQ"
               ;; emacsrocks
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCkRmQ_G_NbdbCQMpALg6UPg"
+              ;; Erick Wright (aka EDJE)
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UC9hUOU4rxr9_kSMaTpiqvDw"
               ;; Ethan and Hila
               "https://www.youtube.com/feeds/videos.xml?channel_id=UC7pp40MU_6rLK5pvJYG3d0Q"
               ;; Every Frame a Painting
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCjFqcJQXGZ6T6sxyFB-5i6A"
               ;; Feminism LOL
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCVRQqUgDRBevsDGOeE1DL3A"
+              ;; fwosh
+              "https://www.youtube.com/feeds/videos.xml?channel_id=UCWSxL8WUS_wkYtUeUIgyUQQ"
               ;; GameXplain
               "https://www.youtube.com/feeds/videos.xml?channel_id=UCfAPTv1LgeEWevG8X_6PUOQ"
               ;; Gaming Historian
