@@ -1,8 +1,6 @@
 #+TITLE: conf.org --- My personal GNU Emacs configuration
 #+AUTHOR: Geoff T. Wark
 
-# TODO: add Rails, C#, and JavaScript packages
-
 I converted to the [[https://stallman.org/saint.html][Church of Emacs]] during the summer of 2015. While Emacs is the [[https://www.youtube.com/watch?v=VADudzQGvU8][editor of a lifetime]], do *NOT* bother unless you have the time (6+ months) and interest to invest. Rest assured, however, that it /is/ worth it. What follows is the setup I have picked up along the way.
 
 This config relies heavily on [[https://github.com/jwiegley/use-package][use-package]] by [[https://twitter.com/jwiegley][John Wiegley]] (the current Emacs +God Emperor+ maintainer). Further inspiration comes from [[https://github.com/danielmai/.emacs.d][Daniel Mai]], [[http://sachachua.com/][Sacha Chua]], and [[http://emacs-fu.blogspot.com/][Dirk-Jan C. Binnema]]. Smaller references are provided inline when relevant.
@@ -151,6 +149,10 @@ I hate tabs! >:(
   ;; C/C-like languages
   (setq-default c-basic-offset 4)
   (c-set-offset 'case-label '+)
+
+  ;; Web technologies
+  (setq css-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
 #+END_SRC
 
 ** Custom Functions
@@ -283,6 +285,15 @@ COMPlete ANYthing.
 
       ;; Turn off in Eshell
       (add-hook 'eshell-mode-hook (lambda () (company-mode)))))
+#+END_SRC
+
+*** csharp-mode
+
+So I can avoid Visual Studio like the [[https://www.youtube.com/watch?v=O6HKh0tEUFc][plague]] it is.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package csharp-mode
+    :ensure t)
 #+END_SRC
 
 *** elfeed
@@ -520,6 +531,46 @@ A project navigation and management library built for Emacs.
     (projectile-global-mode))
 #+END_SRC
 
+*** rainbow-mode
+
+Displays strings representing colors with the color they represent as background.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-mode
+    :ensure t
+    :init
+    (add-hook 'css-mode-hook (lambda () (rainbow-mode 1))))
+#+END_SRC
+
+*** rbenv
+
+Use rbenv to manage your Ruby versions within Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rbenv
+    :ensure t
+    :init
+    (progn
+      (setq rbenv-modeline-function 'rbenv--modeline-plain)
+      (global-rbenv-mode)))
+#+END_SRC
+
+*** ruby-guard
+
+Run guard directly inside Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ruby-guard
+    :ensure t)
+#+END_SRC
+
+*** scss-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package scss-mode
+    :ensure t)
+#+END_SRC
+
 *** simple-clip
 
 Make easy the access of the system clipboard.
@@ -547,6 +598,17 @@ Minor mode that deals with parens pairs and tries to be smart about it.
       (smartparens-global-mode 1)))
 #+END_SRC
 
+*** web-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :init
+    (progn
+      (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+      (setq web-mode-enable-auto-pairing -1)))
+#+END_SRC
+
 ** Other
 
 See the [[file:README.org][README]] for info about how to install these packages.
@@ -564,4 +626,14 @@ Run [[http://www.pandora.com/][Pandora Internet Radio]] as an inferior process i
                                 (company-mode -1)
                                 (smartparens-mode -1)
                                 (toggle-truncate-lines)))
+#+END_SRC
+
+*** js3-mode
+
+A chimeric fork of js2-mode and js-mode.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/elisp/js3-mode/")
+
+  (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 #+END_SRC

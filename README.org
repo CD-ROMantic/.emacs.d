@@ -11,6 +11,11 @@ Be sure to backup your current config before cloning this repository into =~/ema
   mkdir ~/.emacs.d/elisp
   cd ~/.emacs.d/elisp/
   git clone https://github.com/jhanson/pianobar.el.git
+  git clone https://github.com/thomblake/js3-mode.git
+
+  # Byte-compile js3-mode.el
+  cd ~/.emacs.d/elisp/js3-mode/bin/
+  ./build
 #+END_SRC
 
 [[http://www.abolitionistapproach.com/][#GoVegan]]
