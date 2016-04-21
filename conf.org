@@ -171,8 +171,11 @@ Small yet useful functions that I often use.
   (defun my/untabify-buffer ()
     "Run `untabify' on the entire buffer."
     (interactive)
-    (untabify (point-min) (point-max))
-    (message "All tabs are now spaces."))
+    (if (y-or-n-p "Change tabs to spaces?")
+        (progn
+          (untabify (point-min) (point-max))
+          (message "All tabs are now spaces."))))
+  (global-set-key (kbd "C-c U") 'my/untabify-buffer)
 
   (defun my/rename-current-buffer-file ()
     "Renames the current buffer and file it is visiting."
