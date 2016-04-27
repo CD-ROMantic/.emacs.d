@@ -59,3 +59,4 @@ emojis/*
 /projectile-bookmarks.eld
 session.[0-9]*
 /smex-items
+/.mc-lists.el
