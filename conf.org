@@ -289,7 +289,7 @@ Put a subtle hint at column 81 when the code is getting too long.
     :ensure t
     :config
     (set-face-attribute 'column-marker-1 nil :background "black")
-    (add-hook 'find-file-hook (lambda () (interactive (column-marker-1 81)))))
+    (add-hook 'find-file-hook (lambda () (interactive) (column-marker-1 81))))
 #+END_SRC
 
 *** company
